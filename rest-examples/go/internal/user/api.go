@@ -3,8 +3,9 @@ package user
 import (
 	"encoding/json"
 	"fmt"
-	"igprad/learn/rest/go/example/internal/response"
 	"net/http"
+
+	"github.com/igprad/how-to-code/internal/response"
 )
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {

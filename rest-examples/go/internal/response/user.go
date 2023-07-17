@@ -1,6 +1,6 @@
 package response
 
 type UserResponse struct {
-	Name        string
-	PhoneNumber string
+	Name        string `json:"name"`
+	PhoneNumber string `json:"phone_number"`
 }

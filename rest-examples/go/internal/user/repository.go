@@ -3,8 +3,8 @@ package user
 import (
 	"database/sql"
 	"fmt"
-	"igprad/learn/rest/go/example/internal/entity"
 
+	"github.com/igprad/how-to-code/internal/entity"
 	_ "github.com/lib/pq"
 )
 

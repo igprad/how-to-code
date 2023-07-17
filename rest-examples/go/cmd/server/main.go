@@ -1,8 +1,9 @@
 package main
 
 import (
-	"igprad/learn/rest/go/example/internal/user"
 	"net/http"
+
+	"github.com/igprad/how-to-code/internal/user"
 )
 
 func main() {
