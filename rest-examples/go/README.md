@@ -1,6 +1,6 @@
 ## About
 This is an example project for learning how to create rest service using go (trying to not use framework).\
-The idea is to create User management service with CRUD functionalities as the MVP.\
+The idea is to create User management service with CRUD functionalities as the MVP.
 
 ## Project Structure
 The structure of this project is following: https://github.com/qiangxue/go-rest-api \

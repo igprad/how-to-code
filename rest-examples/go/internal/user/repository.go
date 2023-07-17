@@ -1,37 +1,25 @@
 package user
 
 import (
-	"database/sql"
-	"fmt"
-
 	"github.com/igprad/how-to-code/internal/entity"
+	dbcontext "github.com/igprad/how-to-code/pkg/dbctx"
 	_ "github.com/lib/pq"
 )
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "postgres"
-	password = "admin"
-	dbName   = "training"
-)
-
-var db *sql.DB
-
-func initConnection() {
-	postgresConn := fmt.Sprintf("host=%s port =%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbName)
-	con, _ := sql.Open("postgres", postgresConn)
-	db = con
+type Repository interface {
+	FindAll() []entity.UserEntity
 }
 
-func close() {
-	db.Close()
+type repository struct {
+	db dbcontext.DB
 }
 
-func FindAll() []entity.UserEntity {
-	initConnection()
-	results, _ := db.Query("SELECT * FROM users")
-	defer close()
+func NewRepository(dbctx dbcontext.DB) Repository {
+	return repository{dbctx}
+}
+
+func (r repository) FindAll() []entity.UserEntity {
+	results, _ := r.db.Db.Query("SELECT * FROM users")
 
 	userResults := make([]entity.UserEntity, 0)
 

@@ -8,8 +8,23 @@ import (
 	"github.com/igprad/how-to-code/internal/response"
 )
 
-func GetUsers(w http.ResponseWriter, r *http.Request) {
-	userDomains := GetAllUsers()
+type UserApi interface {
+	GetUsers(w http.ResponseWriter, r *http.Request)
+	CreateUser(w http.ResponseWriter, r *http.Request)
+	EditUser(w http.ResponseWriter, r *http.Request)
+	DeleteUser(w http.ResponseWriter, r *http.Request)
+}
+
+type userApi struct {
+	s Service
+}
+
+func CreateUserApi(s Service) UserApi {
+	return userApi{s}
+}
+
+func (u userApi) GetUsers(w http.ResponseWriter, r *http.Request) {
+	userDomains := u.s.GetAllUsers()
 	userResults := make([]response.UserResponse, 0)
 	for _, v := range userDomains {
 		userResults = append(userResults, response.UserResponse{v.Name, v.PhoneNumber})
@@ -21,14 +36,14 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(jsonResponse))
 }
 
-func CreateUser(w http.ResponseWriter, r *http.Request) {
+func (u userApi) CreateUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("TODO - Create an User")
 }
 
-func EditUser(w http.ResponseWriter, r *http.Request) {
+func (u userApi) EditUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("TODO - Edit an User")
 }
 
-func DeleteUser(w http.ResponseWriter, r *http.Request) {
+func (u userApi) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("TODO - Delete an User")
 }
