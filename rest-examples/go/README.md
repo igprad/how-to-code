@@ -15,6 +15,8 @@ So it became like this.
 │   ├── entity           entity definitions and domain logic
 │   ├── errors           error types and handling
 │   ├── healthcheck      healthcheck feature
+│   ├── response         responses that will be returned or consumed at api
+│   ├── request          requests that will be consumed at api
 │   ├── test             helpers for testing purpose
 │   └── user             user domain layer features
 ├── migrations           database migrations

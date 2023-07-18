@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/igprad/how-to-code/internal/config"
@@ -9,20 +10,27 @@ import (
 )
 
 func main() {
-	// init
-	// construct db pointer
+	/*
+	* Init section, if you're coming from Spring Java Realm
+	* This is like bean creation ;)
+	 */
 	db := dbcontext.InitConnection(config.DbHost,
 		config.DbPort,
 		config.DbUser,
 		config.DbPassword,
 		config.DbName)
-	// construct controller -> service -> repository
 	userApi := user.CreateUserApi(user.NewService(user.NewRepository(db)))
 
-	http.HandleFunc("/users", userApi.GetUsers)
-	http.HandleFunc("/user/add", userApi.CreateUser)
-	http.HandleFunc("/user/edit/", userApi.EditUser)
-	http.HandleFunc("/user/delete/", userApi.DeleteUser)
-
-	http.ListenAndServe(":6969", nil)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/users", userApi.GetUsers)
+	mux.HandleFunc("/user/add", userApi.CreateUser)
+	mux.HandleFunc("/user/edit/", userApi.EditUser)
+	mux.HandleFunc("/user/delete/", userApi.DeleteUser)
+	server := http.Server{
+		Addr:    fmt.Sprintf(":%d", 6969),
+		Handler: mux,
+	}
+	if err := server.ListenAndServe(); err != nil {
+		fmt.Println("error run server: ", err)
+	}
 }

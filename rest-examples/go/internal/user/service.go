@@ -1,7 +1,10 @@
 package user
 
+import "github.com/igprad/how-to-code/internal/request"
+
 type Service interface {
 	GetAllUsers() []User
+	CreateUser(ur *request.CreateUserRequest) bool
 }
 
 type service struct {
@@ -20,4 +23,8 @@ func (s service) GetAllUsers() []User {
 		userDomains = append(userDomains, User{v.Name, v.PhoneNumber, v.IdentityNumber})
 	}
 	return userDomains
+}
+
+func (s service) CreateUser(ur *request.CreateUserRequest) bool {
+	return s.r.Insert(ur.Name, ur.PhoneNumber, ur.IdentityNumber)
 }

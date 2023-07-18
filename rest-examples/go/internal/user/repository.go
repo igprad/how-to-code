@@ -1,6 +1,8 @@
 package user
 
 import (
+	"fmt"
+
 	"github.com/igprad/how-to-code/internal/entity"
 	dbcontext "github.com/igprad/how-to-code/pkg/dbctx"
 	_ "github.com/lib/pq"
@@ -8,6 +10,7 @@ import (
 
 type Repository interface {
 	FindAll() []entity.UserEntity
+	Insert(name string, phoneNumber string, identityNumber string) bool
 }
 
 type repository struct {
@@ -30,4 +33,15 @@ func (r repository) FindAll() []entity.UserEntity {
 	}
 
 	return userResults
+}
+
+func (r repository) Insert(name string, phoneNumber string, identityNumber string) bool {
+	_, err := r.db.Db.Query("INSERT into users(name, phone_number, identity_number) values('" + name + "','" + phoneNumber + "','" + identityNumber + "')")
+
+	if err == nil {
+		return true
+	} else {
+		fmt.Println("error insert user with err: ", err)
+		return false
+	}
 }
