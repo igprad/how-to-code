@@ -12,7 +12,7 @@ import (
 func main() {
 	/*
 	* Init section, if you're coming from Spring Java Realm
-	* This is like bean creation ;)
+	* This is like bean creation (maybe? :/)
 	 */
 	db := dbcontext.InitConnection(config.DbHost,
 		config.DbPort,

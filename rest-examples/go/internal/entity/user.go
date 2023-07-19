@@ -9,4 +9,5 @@ type UserEntity struct {
 	IdentityNumber string    `json:"identity_number"`
 	CreatedOn      time.Time `json:"created_on"`
 	UpdatedOn      time.Time `json:"updated_on"`
+	UserId         string    `json:"uuid"`
 }
