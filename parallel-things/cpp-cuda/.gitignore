@@ -55,9 +55,6 @@ Latest commit 2c52d02 on Jun 29, 2016
 *.a
 *.lib
 
-# Others
-*.csv
-
 # Executables
 *.exe
 *.out
