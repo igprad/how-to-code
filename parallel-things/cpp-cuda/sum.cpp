@@ -8,10 +8,10 @@
 
 int main() {
   std::ifstream csv("dataset.csv");
-  double* first_value = (double*)malloc(sizeof(double) * MAX);
-  double* second_value = (double*)malloc(sizeof(double) * MAX);
-  double* third_value = (double*)malloc(sizeof(double) * MAX);
-  double* result = (double*)malloc(sizeof(double) * MAX);
+  double *first_value = (double *)malloc(sizeof(double) * MAX);
+  double *second_value = (double *)malloc(sizeof(double) * MAX);
+  double *third_value = (double *)malloc(sizeof(double) * MAX);
+  double *result = (double *)malloc(sizeof(double) * MAX);
 
   // Getting the value from dataset
   std::string value;
@@ -28,10 +28,13 @@ int main() {
     int rowIdx = 0;
     while (std::getline(lineToInputBuffered, number, ',')) {
       try {
-        if (rowIdx == 1) first_value[idx] = std::stod(number, &sz);
-        if (rowIdx == 2) second_value[idx] = std::stod(number, &sz);
-        if (rowIdx == 3) third_value[idx] = std::stod(number, &sz);
-      } catch (const std::exception& e) {
+        if (rowIdx == 1)
+          first_value[idx] = std::stod(number, &sz);
+        if (rowIdx == 2)
+          second_value[idx] = std::stod(number, &sz);
+        if (rowIdx == 3)
+          third_value[idx] = std::stod(number, &sz);
+      } catch (const std::exception &e) {
         std::cerr << "error: " << e.what() << std::endl;
       }
       rowIdx++;
@@ -57,7 +60,7 @@ int main() {
   }
   std::cout << "To verify all sum was correct, will sum all result elements "
                "with total: "
-            << total << std::endl;
+            << (int)total << std::endl;
   std::cout << "Processing time for each row summarization: " << diff_time
             << " ms." << std::endl;
 

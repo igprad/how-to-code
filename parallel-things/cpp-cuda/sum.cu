@@ -15,27 +15,16 @@ __device__ double sum(double first_val, double second_val, double third_val) {
 }
 
 __global__ void sum_csv_data_with_cuda(double *result, double *first_col,
-                                       double *second_col, double *third_col,
-                                       int max) {
+                                       double *second_col, double *third_col) {
   int offset_x = threadIdx.x;
   int offset_y = blockIdx.x;
-  int offset = offset_y + offset_x * max;
+  int offset = offset_x + offset_y * 1000;
   if (offset < DEFAULT_MAX_ROWS)
     result[offset] =
         sum(first_col[offset], second_col[offset], third_col[offset]);
 }
 
 int main(int argc, char **argv) {
-  // parse args
-  int thread_in, block_in;
-  try {
-    thread_in = std::stoi(argv[1]);
-    block_in = std::stoi(argv[2]);
-  } catch (const std::exception &e) {
-    std::cerr << "Invalid arguments. Please only pass the correct thread and "
-                 "block. e.g. 1000 1000";
-    return 0;
-  }
 
   std::ifstream csv("dataset.csv");
   double *first_value = (double *)malloc(sizeof(double) * DEFAULT_MAX_ROWS);
@@ -101,8 +90,8 @@ int main(int argc, char **argv) {
   cudaEventCreate(&stop);
 
   cudaEventRecord(start, 0);
-  sum_csv_data_with_cuda<<<thread_in, block_in>>>(
-      result_dev, first_dev, second_dev, third_dev, block_in);
+  sum_csv_data_with_cuda<<<1000, 1000>>>(result_dev, first_dev, second_dev,
+                                         third_dev);
   cudaEventRecord(stop, 0);
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
@@ -124,7 +113,7 @@ int main(int argc, char **argv) {
   for (int i = 0; i < DEFAULT_MAX_ROWS; i++) {
     total += result[i];
   }
-  std::cout << "Total sum of all rows = " << total << std::endl;
+  std::cout << "Total sum of all rows = " << (int)total << std::endl;
   std::cout << "With elapsed time while using cuda threads (ms) = " << time
             << std::endl;
 
