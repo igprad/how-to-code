@@ -45,5 +45,5 @@ My result in my local machine (i5-12600K && RTX 3060 (12GB)) run on Arch.
 - cuda -> result: 1499355 (int value) with time cost ~ 0.310688 ms. 
 
 ### To be improved
-[ ] Use dynamic parameter for kernel thread / block size for the calculation.
-[ ] Any other suggestions.
+- [ ] Use dynamic parameter for kernel thread / block size for the calculation.
+- [ ] Any other suggestions.
